@@ -1,1 +1,1 @@
-# covid19-plus-weather
+# Forecasting Covid19 data with New York Weather
