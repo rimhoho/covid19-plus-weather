@@ -1,0 +1,25 @@
+{
+  "name": "covid19-plus-weather",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "~4.16.1",
+    "file-saver": "^2.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rimhoho/covid19-plus-weather"
+  },
+  "keywords": [
+    "COVID-19",
+    "Weather",
+    "New York",
+    "express"
+  ],
+  "license": "MIT"
+}
+
