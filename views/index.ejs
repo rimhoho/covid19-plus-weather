@@ -12,8 +12,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id='navi-bar'><h1>Weather Hi</h1></div>
-  <div id="container"></div>
-  <script src="/javascripts/script.js"></script>
+  <header id='header'>
+    <div class="flex"><div class="title orange bold no-margin">COVID19</div><div id="sorting-covid19" class="letter-spacing button-style"></div></div>
+    <div class="flex-between">
+      <div class="flex"><div class="title bold no-margin grey">WEATHER</div><div id="sorting-weather" class="letter-spacing button-style"></div></div>
+      <div class="title bold no-margin sky">FORECASTING</div>
+    </div>
+  </header>
+  <svg id="container"></svg>
+  <script type="module" src="/javascripts/script.js"></script>
 </body>
 </html>
