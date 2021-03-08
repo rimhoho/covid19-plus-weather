@@ -2,7 +2,7 @@ body { padding: 60px; font: 14px Helvetica, Arial, sans-serif; background-color:
 button { background: none; border:none; padding: 0 0.4rem; color: #444444; font-weight: 900; }
 
 .flex {display: flex;}
-.flex-between {display: flex; justify-content: space-between; max-width:1030px;}
+.flex-between {display: flex; justify-content: space-between; max-width:1280px;}
 
 .no-margin { margin: 0; }
 .disabled-event { pointer-events: none; }
@@ -14,3 +14,10 @@ button { background: none; border:none; padding: 0 0.4rem; color: #444444; font-
 .grey { color: #d0d3d6; }
 .orange { color: #f6753e; }
 .sky { color: #81b2c3; }
+
+.thin-bigger-body {font-weight: 100; font-size: 1.2rem; letter-spacing: -0.02em}
+.bigger-body {font-weight: 500; font-size: 1rem; letter-spacing: -0.02em}
+.big-body {font-weight: 700; font-size: 0.82rem; letter-spacing: -0.03em; word-spacing: -0.1em;}
+.mideum-body {font-weight: 500; font-size: 0.76rem; letter-spacing: -0.03em; word-spacing: -0.06em;}
+.small-body {font-weight: 700; font-size: 0.605rem; letter-spacing: -0.02em;}
+.legend-body {font-weight: 500; font-size: 0.58rem; letter-spacing: -0.04em;}
