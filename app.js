@@ -17,12 +17,13 @@ app.get('/weather', function(request, response) {
   function getData() {
     try {
       let urls = {}
-      for (let month = 1; month < 13; month++ ) {
-        const yearCheck = month <= new Date().getMonth() + 1 ? new Date().getFullYear() : new Date().getFullYear() - 1
-        const key = `${yearCheck}-${month}`
-        urls[key] = `https://www.timeanddate.com/weather/usa/new-york/historic?month=${month}&year=${yearCheck}`
-      }
       urls['forcast'] = 'https://www.timeanddate.com/weather/usa/new-york/ext'
+      for (let month = new Date().getMonth() + 2; month < new Date().getMonth() + 1 + 13; month++ ) {
+        const monthCheck = month > 12 ? month - 12 : month
+        const yearCheck = monthCheck <= new Date().getMonth() + 1 ? new Date().getFullYear() : new Date().getFullYear() - 1
+        const key = `${yearCheck}-${monthCheck}`
+        urls[key] = `https://www.timeanddate.com/weather/usa/new-york/historic?month=${monthCheck}&year=${yearCheck}`
+      }
       getFetchURL(response, urls)
     } catch (error) {
       console.log(error);
@@ -39,8 +40,12 @@ function getFetchURL(response, urls) {
           keys.map((key, i) => {
             const result = key == 'forcast' ? trackForecastData(new JSDOM(body[i])) : trackHistoryData(new JSDOM(body[i]), key.split('-')[1], key.split('-')[0]).map(obj => {return {temp: Number((obj.temp/4).toFixed(2)), templow: Number((obj.templow/4).toFixed(2)), wind: Number((obj.wind/4).toFixed(2)), hum: Number((obj.hum/4).toFixed(2)), date:obj.date}});
             obj[key] = result
+            if (key == new Date().toISOString().slice(0, 7).replace('-0', '-')) {
+              obj[key].push(...obj['forcast'])
+            }
           })
-          return response.json(obj);
+          const {forcast, ...newobj} = obj
+          return response.json(newobj);
   })
 }
 
@@ -51,9 +56,12 @@ function trackHistoryData(dom, month, year) {
   const jsonParse = JSON.parse(replace_once.replace(`;window.month=${month};window.year=${year};`,''))
   //[ 'copyright', 'units', 'temp', 'detail', 'grid', 'conv' ] jsonParse['detail']['desc']
   let helper = {};
+  const oneYrAgo = new Date(new Date().getFullYear() - 1, new Date().getMonth() + 1, new Date().getDate()).toDateString().slice(4, 10).replace(' 0', ' ');
+  const oneYrAgodIdx = jsonParse['detail'].map(obj => { if (obj['hlsh'] && obj['hlsh'] == oneYrAgo) return obj['hlsh'].indexOf(oneYrAgo);}).indexOf(0)
+        jsonParse['detail'].splice(0, oneYrAgodIdx)
   const result = jsonParse['detail'].reduce(function(r, o) {
     const key = o.ds.split(', ', 2).toString();
-    if(!helper[key]) {
+    if(!helper[key] ) {
       const {hl, hlsh, hls, date, ts, icon, desc, baro, wd, ...values} = Object.assign({}, o) // create a copy of o
       helper[key] = values; 
       r.push(helper[key]);
@@ -83,7 +91,7 @@ function trackForecastData(dom) {
     eachObj.templow = parseInt(tempRange.split(' / ')[1].split(' ')[0])
     eachObj.wind = parseInt(windEl)
     eachObj.hum = parseInt(humEl)
-    eachObj.date = new Date(node.firstElementChild.textContent.slice(3)).toISOString().slice(0, 10)
+    eachObj.date = new Date(node.firstElementChild.textContent.slice(3) + " 2021").toISOString().slice(0, 10)
     result.push(eachObj)
   })
   return result
