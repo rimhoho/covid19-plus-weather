@@ -100,3 +100,5 @@ export class Chart {
         return svgG
     }
 }
+//https://en.wikipedia.org/wiki/COVID-19_pandemic_in_New_York_(state)#Four-phase_reopening_plan
+//['New York lockdown March 22, 2020', 'New York start vaccination February 22, 2021']
